@@ -5,6 +5,7 @@
                  [compojure "1.1.6"]
                  [hiccup "1.0.4"]
                  [lib-noir "0.7.9"]
+                 [clj-time "0.6.0"]
                  [com.novemberain/monger "1.5.0"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring-server "0.3.0"]]
