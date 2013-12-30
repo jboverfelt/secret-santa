@@ -1,9 +1,10 @@
 (defproject secret-santa "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "Secret Santa for distributed friend groups"
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [compojure "1.1.6"]
                  [hiccup "1.0.4"]
+                 [lib-noir "0.7.9"]
                  [com.novemberain/monger "1.5.0"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring-server "0.3.0"]]
