@@ -16,6 +16,7 @@
   (let [user (user/find-user-by-email (session/get :user))
         user-id (:_id user)]
     (wishlist/new-wishlist {:text text :user_id user-id})
+    (session/flash-put! :success "Wishlist successfully updated")
     (resp/redirect "/wishlist")))
 
 (defn edit-wishlist []
@@ -26,10 +27,11 @@
   (let [wishlist (wishlist/get-wishlist-by-id id)
         updated (assoc wishlist :text text)]
     (wishlist/update-wishlist updated)
+    (session/flash-put! :success "Wishlist successfully updated")
     (resp/redirect "/wishlist")))
 
 (defroutes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
-  (POST "/wishlist" [text] (create-wishlist text)))
+  (POST "/wishlist" [text] (create-wishlist text))
   (GET "/wishlist/edit" [] (edit-wishlist))
-  (POST "/wishlist/edit" [id text] (update-wishlist id text))
+  (POST "/wishlist/edit" [id text] (update-wishlist id text)))
