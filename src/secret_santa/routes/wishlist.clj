@@ -30,6 +30,6 @@
 
 (defroutes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
-  (GET "/wishlist/edit" [] (edit-wishlist))
-  (POST "/wishlist/:id" [id text] (update-wishlist id text))
   (POST "/wishlist" [text] (create-wishlist text)))
+  (GET "/wishlist/edit" [] (edit-wishlist))
+  (POST "/wishlist/edit" [id text] (update-wishlist id text))
