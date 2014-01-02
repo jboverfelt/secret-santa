@@ -25,7 +25,4 @@
   (-> (routes home-routes wishlist-routes app-routes)
       (handler/site)
       (session/wrap-noir-session {:store (memory-store)})
-      (noir/wrap-strip-trailing-slash)
       (wrap-base-url)))
-
-
