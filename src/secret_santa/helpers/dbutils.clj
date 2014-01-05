@@ -1,4 +1,4 @@
-(ns secret-santa.models.dbutils
+(ns secret-santa.helpers.dbutils
   (:require [monger.core :as mg]))
 
 (defn setup-db []
