@@ -12,13 +12,13 @@
     (db/setup-db)
     (mc/find-map-by-id "wishlists" id)))
 
-(defn get-wishlist-by-user [email]
-  (let [user-id (:_id (user/find-user-by-email email))]
+(defn get-wishlist-by-user [user-id]
+  (do
     (db/setup-db)
     (mc/find-one-as-map "wishlists" {:user_id user-id})))
 
-(defn get-child-wishlist-by-user [email]
-  (let [child-id (:child_id (user/find-user-by-email email))]
+(defn get-child-wishlist-by-user [user-id]
+  (let [child-id (:child_id (user/find-user-by-id user-id))]
     (db/setup-db)
     (mc/find-one-as-map "wishlists" {:user_id child-id})))
 

@@ -1,6 +1,5 @@
 (ns secret-santa.routes.wishlist
   (:require [compojure.core :refer :all]
-            [clostache.parser :as clo]
             [secret-santa.views.layout :as layout]
             [secret-santa.models.wishlist :as wishlist]
             [secret-santa.models.user :as user]
@@ -13,8 +12,7 @@
     (layout/render "templates/wishlist.mustache" {:my my-wishlist :child child-wishlist})))
 
 (defn create-wishlist [text]
-  (let [user (user/find-user-by-email (session/get :user))
-        user-id (:_id user)]
+  (let [user-id (session/get :user)]
     (wishlist/new-wishlist {:text text :user_id user-id})
     (resp/redirect "/wishlist")))
 

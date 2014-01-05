@@ -9,6 +9,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [secret-santa.routes.home :refer [home-routes]]
+            [secret-santa.routes.auth :refer [auth-routes]]
             [secret-santa.routes.wishlist :refer [wishlist-routes]]))
 
 (defn init []
@@ -22,7 +23,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes home-routes wishlist-routes app-routes)
+  (-> (routes home-routes wishlist-routes auth-routes app-routes)
       (handler/site)
       (session/wrap-noir-session {:store (memory-store)})
       (noir/wrap-strip-trailing-slash)
