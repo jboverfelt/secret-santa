@@ -17,8 +17,8 @@
     (db/setup-db)
     (mc/find-one-as-map "users" {:email email})))
 
-(defn create-user [email password]
+(defn create-user [email password full-name]
   (let [oid (ObjectId.)
         digest (crypt/encrypt password)]
     (db/setup-db)
-    (mc/insert-and-return "users" (doc/setup-new-document {:email email :digest digest} oid))))
+    (mc/insert-and-return "users" (doc/setup-new-document {:email email :digest digest :name full-name} oid))))

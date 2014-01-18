@@ -13,20 +13,20 @@
 (defn show-login-page []
   (layout/render "templates/login.mustache" {}))
 
-(defn create-user [email password]
-  (let [user (user/create-user email password)]
+(defn create-user [email password fullname]
+  (let [user (user/create-user email password fullname)]
     (session/put! :user (:_id user))
     (resp/redirect "/")))
 
 (defn authenticate-user [email password]
   (let [user (user/find-user-by-email email)
         digest (:digest user)]
-    (if (and digest (crypt/compare password digest))
+    (if (and user (crypt/compare password digest))
       (do
         (session/put! :user (:_id user))
         (resp/redirect "/"))
       (do
-        (session/flash-put! :error "Incorrect email or password.")
+        (session/flash-put! :error password)
         (show-login-page)))))
 
 (defn logout []
@@ -36,7 +36,7 @@
 
 (defroutes auth-routes
   (GET "/register" [] (show-registration-page))
-  (POST "/register" [email password] (create-user email password))
+  (POST "/register" [email password fullname] (create-user email password fullname))
   (GET "/login" [] (show-login-page))
   (POST "/login" [email password] (authenticate-user email password))
   (GET "/logout" [] (restricted (logout))))
