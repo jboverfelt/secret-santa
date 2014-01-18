@@ -3,6 +3,7 @@
             [secret-santa.views.layout :as layout]
             [secret-santa.models.wishlist :as wishlist]
             [secret-santa.models.user :as user]
+            [noir.util.route :refer [def-restricted-routes]]
             [noir.response :as resp]
             [noir.session :as session]))
 
@@ -27,7 +28,7 @@
     (resp/redirect "/wishlist")))
 
 
-(defroutes wishlist-routes
+(def-restricted-routes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
   (POST "/wishlist" [text] (create-wishlist text))
   (GET "/wishlist/edit" [] (edit-wishlist))

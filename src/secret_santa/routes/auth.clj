@@ -2,6 +2,7 @@
   (:require [secret-santa.models.user :as user]
             [secret-santa.views.layout :as layout]
             [compojure.core :refer :all]
+            [noir.util.route :refer [restricted]]
             [noir.session :as session]
             [noir.util.crypt :as crypt]
             [noir.response :as resp]))
@@ -38,4 +39,4 @@
   (POST "/register" [email password] (create-user email password))
   (GET "/login" [] (show-login-page))
   (POST "/login" [email password] (authenticate-user email password))
-  (GET "/logout" [] (logout)))
+  (GET "/logout" [] (restricted (logout))))
