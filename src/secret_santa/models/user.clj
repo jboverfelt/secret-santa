@@ -8,13 +8,17 @@
 
 
 (defn find-user-by-id [id]
-  {:email "test@test.com" :_id id})
+  (do
+    (db/setup-db)
+    (mc/find-map-by-id "users" id)))
 
 (defn find-user-by-email [email]
-  {:email email :_id "123"})
+  (do
+    (db/setup-db)
+    (mc/find-one-as-map "users" {:email email})))
 
 (defn create-user [email password]
   (let [oid (ObjectId.)
         digest (crypt/encrypt password)]
     (db/setup-db)
-    (mc/insert-and-return (doc/setup-new-document {:email email :digest digest} oid))))
+    (mc/insert-and-return "users" (doc/setup-new-document {:email email :digest digest} oid))))
