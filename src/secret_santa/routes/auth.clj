@@ -26,7 +26,7 @@
         (session/put! :user (:_id user))
         (resp/redirect "/"))
       (do
-        (session/flash-put! :error password)
+        (session/flash-put! :error "Incorrect email or password.")
         (show-login-page)))))
 
 (defn logout []
