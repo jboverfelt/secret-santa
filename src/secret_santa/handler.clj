@@ -25,6 +25,7 @@
 (def app
   (-> (routes home-routes wishlist-routes auth-routes app-routes)
       (handler/site)
+      (session/wrap-noir-flash)
       (session/wrap-noir-session {:store (memory-store)})
       (noir/wrap-strip-trailing-slash)
       (wrap-base-url)))

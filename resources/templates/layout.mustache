@@ -38,6 +38,18 @@
       </ul>
     </div>
   </nav>
+  <div class="container">
+    {{#error}}
+      <div class="alert alert-danger">
+        {{text}}
+      </div>
+    {{/error}}
+    {{#success}}
+      <div class="alert alert-success">
+        {{text}}
+      </div>
+    {{/success}}
+  </div>
   {{&body}}
 </body>
 

@@ -6,11 +6,11 @@
             [noir.util.crypt :as crypt]
             [noir.response :as resp]))
 
-(defn show-registration-page [& errors]
-  (layout/render "templates/register.mustache" {:errors errors}))
+(defn show-registration-page []
+  (layout/render "templates/register.mustache" {}))
 
-(defn show-login-page [& errors]
-  (layout/render "templates/register.mustache" {:errors errors}))
+(defn show-login-page []
+  (layout/render "templates/login.mustache" {}))
 
 (defn create-user [email password]
   (let [user (user/create-user email password)]
@@ -20,11 +20,13 @@
 (defn authenticate-user [email password]
   (let [user (user/find-user-by-email email)
         digest (:digest user)]
-    (if (and (user) (crypt/compare password digest))
+    (if (and digest (crypt/compare password digest))
       (do
         (session/put! :user (:_id user))
         (resp/redirect "/"))
-      (show-login-page {:errors ["Incorrect email or password"]}))))
+      (do
+        (session/flash-put! :error "Incorrect email or password.")
+        (show-login-page)))))
 
 (defn logout []
   (do
