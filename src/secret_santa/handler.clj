@@ -22,7 +22,7 @@
 (defn force-login []
   (fn [req]
     (do
-      (session/flash-put! :error "You must be logged in to view this page")
+      (session/flash-put! :warn "Please log in or sign up")
       (resp/redirect "/login"))))
 
 (defn user-access [req]
@@ -33,7 +33,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes home-routes wishlist-routes auth-routes app-routes)
+  (-> (routes auth-routes home-routes wishlist-routes app-routes)
       (handler/site)
       (noir/wrap-access-rules [{:on-fail (force-login) :rule user-access}])
       (session/wrap-noir-flash)

@@ -11,6 +11,10 @@
   (when-let [msg (session/flash-get :error)]
     {:text msg}))
 
+(defn get-warns []
+  (when-let [msg (session/flash-get :warn)]
+    {:text msg}))
+
 (defn get-user-id []
   (session/get :user))
 
@@ -20,7 +24,7 @@
 
 (defn common [body]
     (clo/render-resource "templates/layout.mustache"
-                         {:body body :user (get-user-id) :email (get-email) :error (get-errors) :success (get-success)}))
+                         {:body body :user (get-user-id) :email (get-email) :warn (get-warns) :error (get-errors) :success (get-success)}))
 
 (defn render [template data]
   (common (clo/render-resource template data)))
