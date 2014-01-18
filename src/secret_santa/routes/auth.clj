@@ -32,6 +32,7 @@
 (defn logout []
   (do
     (session/clear!)
+    (session/flash-put! :success "You have logged out successfully")
     (resp/redirect "/login")))
 
 (defroutes auth-routes
@@ -39,4 +40,4 @@
   (POST "/register" [email password fullname] (create-user email password fullname))
   (GET "/login" [] (show-login-page))
   (POST "/login" [email password] (authenticate-user email password))
-  (GET "/logout" [] (restricted (logout))))
+  (GET "/logout" [] (logout)))
