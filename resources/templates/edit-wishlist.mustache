@@ -4,7 +4,11 @@
 <form role="form" action="/wishlist" method="post">
   <div class="form-group">
     <label for="text">Wishlist</label>
-    <textarea class="form-control" rows="10" id="text" name="text"></textarea>
+    <textarea class="form-control" rows="10" id="text" name="text">
+    {{#my}}
+      {{text}}
+    {{/my}}
+    </textarea>
   </div>
   <button type="submit" class="btn btn-primary submit-btn">Submit</button>
 </form>

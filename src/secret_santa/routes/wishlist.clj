@@ -21,9 +21,11 @@
   (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
     (layout/render "templates/edit-wishlist.mustache" {:my wishlist})))
 
-(defn update-wishlist [id text]
-  (let [wishlist (wishlist/get-wishlist-by-id id)
+(defn update-wishlist [text]
+  (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))
         updated (assoc wishlist :text text)]
+    (println (pr wishlist))
+    (println (pr updated))
     (wishlist/update-wishlist updated)
     (resp/redirect "/wishlist")))
 
@@ -32,5 +34,5 @@
   (GET "/wishlist" [] (show-wishlist))
   (POST "/wishlist" [text] (create-wishlist text))
   (GET "/wishlist/edit" [] (edit-wishlist))
-  (POST "/wishlist/edit" [id text] (update-wishlist id text)))
+  (POST "/wishlist/edit" [text] (update-wishlist text)))
 
