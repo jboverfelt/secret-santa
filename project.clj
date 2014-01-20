@@ -7,6 +7,7 @@
                  [lib-noir "0.7.9"]
                  [clj-time "0.6.0"]
                  [com.novemberain/monger "1.5.0"]
+                 [com.taoensso/timbre "3.0.0-RC4"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring-server "0.3.0"]]
   :plugins [[lein-ring "0.8.7"]]
