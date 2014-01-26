@@ -7,6 +7,12 @@
             [noir.response :as resp]
             [noir.session :as session]))
 
+(defn- edit-wishlist-helper [wishlist]
+  (do
+    (wishlist/edit-wishlist wishlist)
+    (session/flash-put! :success "Wishlist updated")
+    (resp/redirect "/")))
+
 (defn show-wishlist []
   (let [my-wishlist (wishlist/get-wishlist-by-user (session/get :user))
         child-wishlist (wishlist/get-child-wishlist-by-user (session/get :user))]
@@ -19,13 +25,9 @@
 (defn update-wishlist [text]
   (if-let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
     (let [updated (assoc wishlist :text text)]
-      (wishlist/edit-wishlist updated)
-      (session/flash-put! :success "Wishlist updated")
-      (resp/redirect "/"))
+      (edit-wishlist-helper updated))
     (let [user-id (session/get :user)]
-      (wishlist/edit-wishlist {:text text :user_id user-id})
-      (session/flash-put! :success "Wishlist updated")
-      (resp/redirect "/"))))
+      (edit-wishlist-helper {:text text :user_id user-id}))))
 
 (def-restricted-routes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
