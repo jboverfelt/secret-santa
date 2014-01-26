@@ -12,27 +12,21 @@
         child-wishlist (wishlist/get-child-wishlist-by-user (session/get :user))]
     (layout/render "templates/wishlist.mustache" {:my my-wishlist :child child-wishlist})))
 
-(defn create-wishlist [text]
-  (let [user-id (session/get :user)]
-    (wishlist/new-wishlist {:text text :user_id user-id})
-    (resp/redirect "/wishlist")))
-
 (defn edit-wishlist []
   (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
     (layout/render "templates/edit-wishlist.mustache" {:my wishlist})))
 
 (defn update-wishlist [text]
-  (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))
-        updated (assoc wishlist :text text)]
-    (println (pr wishlist))
-    (println (pr updated))
-    (wishlist/update-wishlist updated)
-    (resp/redirect "/wishlist")))
-
+  (if-let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
+    (let [updated (assoc wishlist :text text)]
+      (wishlist/edit-wishlist updated)
+      (resp/redirect "/"))
+    (let [user-id (session/get :user)]
+      (wishlist/edit-wishlist {:text text :user_id user-id})
+      (resp/redirect "/"))))
 
 (def-restricted-routes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
-  (POST "/wishlist" [text] (create-wishlist text))
-  (GET "/wishlist/edit" [] (edit-wishlist))
-  (POST "/wishlist/edit" [text] (update-wishlist text)))
+  (POST "/wishlist" [text] (update-wishlist text))
+  (GET "/wishlist/edit" [] (edit-wishlist)))
 
