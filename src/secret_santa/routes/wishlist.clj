@@ -20,10 +20,12 @@
   (if-let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
     (let [updated (assoc wishlist :text text)]
       (wishlist/edit-wishlist updated)
-      (resp/redirect "/"))
+      (resp/redirect "/")
+      (session/flash-put! :success "Wishlist updated")))
     (let [user-id (session/get :user)]
       (wishlist/edit-wishlist {:text text :user_id user-id})
-      (resp/redirect "/"))))
+      (resp/redirect "/"))
+      (session/flash-put! :success "Wishlist updated"))
 
 (def-restricted-routes wishlist-routes
   (GET "/wishlist" [] (show-wishlist))
