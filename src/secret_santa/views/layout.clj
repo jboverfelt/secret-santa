@@ -22,9 +22,14 @@
   (when-let [user-id (get-user-id)]
     (:email (user/find-user-by-id user-id))))
 
+(defn get-admin []
+  (when-let [user-id (get-user-id)]
+    (:admin (user/find-user-by-id user-id))))
+
 (defn common [body]
     (clo/render-resource "templates/layout.mustache"
-                         {:body body :user (get-user-id) :email (get-email) :warn (get-warns) :error (get-errors) :success (get-success)}))
+                         {:body body :user (get-user-id) :email (get-email) :admin (get-admin)
+                          :warn (get-warns) :error (get-errors) :success (get-success)}))
 
 (defn render [template data]
   (common (clo/render-resource template data)))

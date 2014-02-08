@@ -9,8 +9,10 @@
             [noir.response :as resp]
             [compojure.handler :as handler]
             [compojure.route :as route]
+            [secret-santa.models.user :as user]
             [secret-santa.routes.home :refer [home-routes]]
             [secret-santa.routes.auth :refer [auth-routes]]
+            [secret-santa.routes.admin :refer [admin-routes]]
             [secret-santa.routes.wishlist :refer [wishlist-routes]]))
 
 (defn init []
@@ -19,23 +21,30 @@
 (defn destroy []
   (println "secret-santa is shutting down"))
 
-(defn force-login []
-  (fn [req]
-    (do
-      (session/flash-put! :warn "Please log in or sign up")
-      (resp/redirect "/login"))))
+(defn force-login [_]
+  (do
+    (session/flash-put! :warn "Please log in or sign up")
+    (resp/redirect "/login")))
 
-(defn user-access [req]
+(defn force-not-found [_]
+  (resp/redirect "Not Found"))
+
+(defn user-access [_]
   (session/get :user))
+
+(defn admin-access [_]
+  (when-let [user-id (session/get :user)]
+    (user/admin? user-id)))
 
 (defroutes app-routes
   (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes auth-routes home-routes wishlist-routes app-routes)
+  (-> (routes auth-routes home-routes admin-routes wishlist-routes app-routes)
       (handler/site)
-      (noir/wrap-access-rules [{:on-fail (force-login) :rule user-access}])
+      (noir/wrap-access-rules [{:on-fail force-login :rule user-access}
+                               {:on-fail force-not-found :rule admin-access :uri "/admin"}])
       (session/wrap-noir-flash)
       (session/wrap-noir-session {:store (memory-store)})
       (noir/wrap-strip-trailing-slash)

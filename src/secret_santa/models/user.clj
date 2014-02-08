@@ -22,3 +22,13 @@
         digest (crypt/encrypt password)]
     (db/setup-db)
     (mc/insert-and-return "users" (doc/setup-new-document {:email email :digest digest :name full-name} oid))))
+
+(defn update-user [user]
+  (do
+    (db/setup-db)
+    (mc/update-by-id "users" (:_id user) (doc/touch user))))
+
+(defn admin? [user-id]
+  (do
+    (db/setup-db)
+    (:admin (find-user-by-id user-id))))

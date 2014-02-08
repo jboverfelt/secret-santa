@@ -30,6 +30,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{email}} <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/profile">Profile</a></li>
+            {{#admin}}
+            <li><a href="/admin">Admin</a></li>
+            {{/admin}}
             <li class="divider"></li>
             <li><a href="/logout">Sign Out</a></li>
           </ul>
