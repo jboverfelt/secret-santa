@@ -44,7 +44,7 @@
   (-> (routes auth-routes home-routes admin-routes wishlist-routes app-routes)
       (handler/site)
       (noir/wrap-access-rules [{:on-fail force-login :rule user-access}
-                               {:on-fail force-not-found :rule admin-access :uri "/admin"}])
+                               {:on-fail force-not-found :rule admin-access :uri "/admin/*"}])
       (session/wrap-noir-flash)
       (session/wrap-noir-session {:store (memory-store)})
       (noir/wrap-strip-trailing-slash)
