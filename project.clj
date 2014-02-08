@@ -6,6 +6,7 @@
                  [hiccup "1.0.4"]
                  [lib-noir "0.7.9"]
                  [clj-time "0.6.0"]
+                 [clojurewerkz/mailer "1.0.0"]
                  [com.novemberain/monger "1.5.0"]
                  [com.taoensso/timbre "3.0.0-RC4"]
                  [de.ubercode.clostache/clostache "1.3.1"]

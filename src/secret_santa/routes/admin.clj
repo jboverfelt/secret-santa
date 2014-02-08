@@ -3,6 +3,7 @@
             [secret-santa.views.layout :as layout]
             [secret-santa.models.invited-user :as invite]
             [secret-santa.models.user :as user]
+            [clojurewerkz.mailer.core :as mail]
             [clojure.string :as string]
             [noir.session :as session]
             [noir.util.route :refer [def-restricted-routes]]
@@ -11,8 +12,16 @@
 (defn show-admin []
   (layout/render "templates/admin.mustache" {}))
 
+(defn send-email [to]
+  (mail/with-settings {:host "localhost" :port 1025}
+    (mail/with-delivery-mode :smtp
+      (mail/deliver-email {:from "admin" :to [to] :subject "Welcome to Secret Santa!"}
+                          "email/templates/invite.html.mustache" {:url "http://localhost:8081/register"} :text/html))))
+
 (defn setup-new-user [email]
-  (invite/create-invited-user email))
+  (do
+    (invite/create-invited-user email)
+    (send-email email)))
 
 (defn assign-children [])
 
