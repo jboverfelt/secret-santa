@@ -19,9 +19,8 @@
                           "email/templates/invite.html.mustache" {:url "http://localhost:8081/register"} :text/html))))
 
 (defn setup-new-user [email]
-  (do
-    (invite/create-invited-user email)
-    (send-email email)))
+  (invite/create-invited-user email)
+  (send-email email))
 
 (defn assign-children [])
 

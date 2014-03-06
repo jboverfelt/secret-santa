@@ -6,9 +6,8 @@
   (:import [org.bson.types ObjectId]))
 
 (defn find-invited-user-by-email [email]
-  (do
-    (db/setup-db)
-    (mc/find-one-as-map "invites" {:email email})))
+  (db/setup-db)
+  (mc/find-one-as-map "invites" {:email email}))
 
 (defn create-invited-user [email]
   (let [oid (ObjectId.)]
@@ -16,6 +15,5 @@
     (mc/insert-and-return "invites" (doc/setup-new-document {:email email} oid))))
 
 (defn remove-invited-user [email]
-  (do
-    (db/setup-db)
-    (mc/remove "invites" {:email email})))
+  (db/setup-db)
+  (mc/remove "invites" {:email email}))

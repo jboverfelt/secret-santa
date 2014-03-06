@@ -8,14 +8,12 @@
 
 
 (defn get-wishlist-by-id [id]
-  (do
-    (db/setup-db)
-    (mc/find-map-by-id "wishlists" id)))
+  (db/setup-db)
+  (mc/find-map-by-id "wishlists" id))
 
 (defn get-wishlist-by-user [user-id]
-  (do
-    (db/setup-db)
-    (mc/find-one-as-map "wishlists" {:user_id user-id})))
+  (db/setup-db)
+  (mc/find-one-as-map "wishlists" {:user_id user-id}))
 
 (defn get-child-wishlist-by-user [user-id]
   (let [child-id (:child_id (user/find-user-by-id user-id))]
@@ -23,11 +21,10 @@
     (mc/find-one-as-map "wishlists" {:user_id child-id})))
 
 (defn edit-wishlist [wishlist]
-  (do
-    (db/setup-db)
-    (if-let [id (:_id wishlist)]
-      (mc/update-by-id "wishlists" id (doc/touch wishlist))
-      (mc/insert-and-return "wishlists" (doc/setup-new-document wishlist (ObjectId.))))))
+  (db/setup-db)
+  (if-let [id (:_id wishlist)]
+    (mc/update-by-id "wishlists" id (doc/touch wishlist))
+    (mc/insert-and-return "wishlists" (doc/setup-new-document wishlist (ObjectId.)))))
 
 (defn delete-wishlist [id]
   (let [oid (ObjectId. id)]

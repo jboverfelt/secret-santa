@@ -8,14 +8,12 @@
 
 
 (defn find-user-by-id [id]
-  (do
-    (db/setup-db)
-    (mc/find-map-by-id "users" id)))
+  (db/setup-db)
+  (mc/find-map-by-id "users" id))
 
 (defn find-user-by-email [email]
-  (do
-    (db/setup-db)
-    (mc/find-one-as-map "users" {:email email})))
+  (db/setup-db)
+  (mc/find-one-as-map "users" {:email email}))
 
 (defn create-user [email password full-name]
   (let [oid (ObjectId.)
@@ -24,11 +22,9 @@
     (mc/insert-and-return "users" (doc/setup-new-document {:email email :digest digest :name full-name} oid))))
 
 (defn update-user [user]
-  (do
-    (db/setup-db)
-    (mc/update-by-id "users" (:_id user) (doc/touch user))))
+  (db/setup-db)
+  (mc/update-by-id "users" (:_id user) (doc/touch user)))
 
 (defn admin? [user-id]
-  (do
-    (db/setup-db)
-    (:admin (find-user-by-id user-id))))
+  (db/setup-db)
+  (:admin (find-user-by-id user-id)))

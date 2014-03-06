@@ -41,10 +41,9 @@
         (show-login-page)))))
 
 (defn logout []
-  (do
-    (session/clear!)
-    (session/flash-put! :success "You have logged out successfully")
-    (resp/redirect "/login")))
+  (session/clear!)
+  (session/flash-put! :success "You have logged out successfully")
+  (resp/redirect "/login"))
 
 (defroutes auth-routes
   (GET "/register" [] (show-registration-page))

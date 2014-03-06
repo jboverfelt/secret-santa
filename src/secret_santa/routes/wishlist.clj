@@ -8,10 +8,9 @@
             [noir.session :as session]))
 
 (defn- edit-wishlist-helper [wishlist]
-  (do
-    (wishlist/edit-wishlist wishlist)
-    (session/flash-put! :success "Wishlist updated")
-    (resp/redirect "/")))
+  (wishlist/edit-wishlist wishlist)
+  (session/flash-put! :success "Wishlist updated")
+  (resp/redirect "/"))
 
 (defn show-wishlist []
   (let [my-wishlist (wishlist/get-wishlist-by-user (session/get :user))
