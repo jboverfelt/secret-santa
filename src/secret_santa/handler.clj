@@ -22,9 +22,8 @@
   (println "secret-santa is shutting down"))
 
 (defn force-login [_]
-  (do
-    (session/flash-put! :warn "Please log in or sign up")
-    (resp/redirect "/login")))
+  (session/flash-put! :warn "Please log in or sign up")
+  (resp/redirect "/login"))
 
 (defn force-not-found [_]
   (resp/redirect "Not Found"))
