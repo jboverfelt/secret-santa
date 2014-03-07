@@ -26,7 +26,7 @@
   (resp/redirect "/login"))
 
 (defn force-not-found [_]
-  (resp/redirect "Not Found"))
+  (resp/status 404 "Not Found"))
 
 (defn user-access [_]
   (session/get :user))
@@ -43,7 +43,7 @@
   (-> (routes auth-routes home-routes admin-routes wishlist-routes app-routes)
       (handler/site)
       (noir/wrap-access-rules [{:on-fail force-login :rule user-access}
-                               {:on-fail force-not-found :rule admin-access :uri "/admin/*"}])
+                               {:on-fail force-not-found :rule admin-access :uris ["/admin" "/admin/*"]}])
       (session/wrap-noir-flash)
       (session/wrap-noir-session {:store (memory-store)})
       (noir/wrap-strip-trailing-slash)
