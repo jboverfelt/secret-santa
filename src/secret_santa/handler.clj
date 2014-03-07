@@ -1,8 +1,6 @@
 (ns secret-santa.handler
   (:require [compojure.core :refer [defroutes routes]]
-            [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.session.memory :refer [memory-store]]
-            [ring.middleware.file-info :refer [wrap-file-info]]
             [hiccup.middleware :refer [wrap-base-url]]
             [noir.session :as session]
             [noir.util.middleware :as noir]
@@ -26,7 +24,7 @@
   (resp/redirect "/login"))
 
 (defn force-not-found [_]
-  (resp/status 404 "Not Found"))
+  (resp/status 404 (resp/content-type "text/html" "Not Found")))
 
 (defn user-access [_]
   (session/get :user))
