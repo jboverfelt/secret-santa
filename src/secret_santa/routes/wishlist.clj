@@ -3,7 +3,6 @@
             [secret-santa.views.layout :as layout]
             [secret-santa.models.wishlist :as wishlist]
             [secret-santa.models.user :as user]
-            [clojure.data.json :as json]
             [noir.util.route :refer [def-restricted-routes]]
             [noir.response :as resp]
             [noir.session :as session]))
@@ -13,12 +12,10 @@
   (session/flash-put! :success "Wishlist updated")
   (resp/redirect "/"))
 
-(defn wishlist-as-json []
+(defn wishlist->json []
   (let [my-wishlist (wishlist/get-wishlist-by-user (session/get :user))
         text (:text my-wishlist)]
-    {:status 200
-     :headers {"Content-Type" "application/json; charset=utf-8"}
-     :body (json/write-str {:text text})})) 
+    (resp/json {:text text})))
 
 (defn edit-wishlist []
   (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
@@ -32,6 +29,6 @@
       (edit-wishlist-helper {:text text :user_id user-id}))))
 
 (def-restricted-routes wishlist-routes
-  (GET "/wishlist/json" [] (wishlist-as-json))
+  (GET "/wishlist/json" [] (wishlist->json))
   (POST "/wishlist" [text] (update-wishlist text))
   (GET "/wishlist/edit" [] (edit-wishlist)))
