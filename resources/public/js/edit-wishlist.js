@@ -8,7 +8,8 @@ var opts = {
   focusOnLoad: true,
   button: {
     fullscreen: false
-  }
+  },
+  autogrow: true
 }
 
 var editor = new EpicEditor(opts).load();
