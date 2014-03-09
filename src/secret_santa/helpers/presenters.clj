@@ -1,7 +1,5 @@
 (ns secret-santa.helpers.presenters
-  (:require [clojure.string :as str]))
+  (:require [markdown.core :as md]))
 
-(defn text->html [text]
-  (if text
-    (str/replace text "\r\n" "<br />")
-    ""))
+(defn md->html [text]
+  (md/md-to-html-string text))

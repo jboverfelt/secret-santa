@@ -11,6 +11,7 @@
             [secret-santa.routes.home :refer [home-routes]]
             [secret-santa.routes.auth :refer [auth-routes]]
             [secret-santa.routes.admin :refer [admin-routes]]
+            [secret-santa.routes.user :refer [user-routes]]
             [secret-santa.routes.wishlist :refer [wishlist-routes]]))
 
 (defn init []
@@ -38,7 +39,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes auth-routes home-routes admin-routes wishlist-routes app-routes)
+  (-> (routes auth-routes home-routes admin-routes user-routes wishlist-routes app-routes)
       (handler/site)
       (noir/wrap-access-rules [{:on-fail force-login :rule user-access}
                                {:on-fail force-not-found :rule admin-access :uris ["/admin" "/admin/*"]}])

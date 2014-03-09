@@ -15,6 +15,10 @@
   (db/setup-db)
   (mc/find-one-as-map "users" {:email email}))
 
+(defn all-users []
+  (db/setup-db)
+  (mc/find-maps "users"))
+
 (defn create-user [email password full-name]
   (let [oid (ObjectId.)
         digest (crypt/encrypt password)]
