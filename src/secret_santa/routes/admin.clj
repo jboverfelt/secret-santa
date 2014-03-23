@@ -10,8 +10,15 @@
             [noir.util.route :refer [def-restricted-routes]]
             [noir.response :as resp]))
 
+(defn- create-santa-child-map [user]
+  (let [santa (:name user)
+        child (user/find-child-name-by-id (:_id user))]
+    {:santa santa :child child}))
+
 (defn show-admin []
-  (layout/render "templates/admin.mustache" {}))
+  (let [users (user/all-users)
+        mappings (map create-santa-child-map users)]
+    (layout/render "templates/admin.mustache" {:mappings mappings})))
 
 (defn send-email [to]
   (mail/with-settings {:host "localhost" :port 1025}

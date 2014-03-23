@@ -20,4 +20,11 @@
       <button class="btn btn-primary">Send Invites</button>
     </form>
   </div>
+  <hr />
+  <div class="row">
+    <h4>Santa to Child Mappings</h4>
+    {{#mappings}}
+      <p>{{santa}} <span class="glyphicon glyphicon-chevron-right"></span> {{child}}</p>
+    {{/mappings}}
+  </div>
 </div>

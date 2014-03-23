@@ -15,6 +15,14 @@
   (db/setup-db)
   (mc/find-one-as-map "users" {:email email}))
 
+(defn find-child-by-id [id]
+  (db/setup-db)
+  (find-user-by-id (:child_id (find-user-by-id id))))
+
+(defn find-child-name-by-id [id]
+  (db/setup-db)
+  (:name (find-child-by-id id)))
+
 (defn all-users []
   (db/setup-db)
   (mc/find-maps "users"))
