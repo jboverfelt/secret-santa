@@ -3,6 +3,7 @@
             [secret-santa.views.layout :as layout]
             [secret-santa.models.invited-user :as invite]
             [secret-santa.models.user :as user]
+            [secret-santa.helpers.children :as children]
             [clojurewerkz.mailer.core :as mail]
             [clojure.string :as string]
             [noir.session :as session]
@@ -22,7 +23,17 @@
   (invite/create-invited-user email)
   (send-email email))
 
-(defn assign-children [])
+(defn assign-children []
+  (let [user-ids (map :_id (user/all-users))
+        size (count user-ids)]
+    (if (even? size)
+      (do
+        (user/update-children (children/create-santa-map user-ids))
+        (session/flash-put! :success "Children assigned")
+        (resp/redirect "/admin"))
+      (do
+        (session/flash-put! :error "You must have an even number of users to play")
+        (resp/redirect "/admin")))))
 
 (defn parse-emails [emails]
   (map string/trim (string/split emails #",")))

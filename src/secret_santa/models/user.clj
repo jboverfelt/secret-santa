@@ -29,6 +29,16 @@
   (db/setup-db)
   (mc/update-by-id "users" (:_id user) (doc/touch user)))
 
+(defn add-child-relationship [[santa child]]
+  (db/setup-db)
+  (-> (find-user-by-id santa)
+      (assoc :child_id child)
+      update-user))
+
+(defn update-children [id-map]
+  (db/setup-db)
+  (doall (map add-child-relationship (seq id-map))))
+
 (defn admin? [user-id]
   (db/setup-db)
   (:admin (find-user-by-id user-id)))
