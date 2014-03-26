@@ -1,7 +1,7 @@
 (defproject secret-santa "0.1.0-SNAPSHOT"
   :description "Secret Santa for distributed friend groups"
   :url "http://example.com/FIXME"
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/core.logic "0.8.7"]
                  [compojure "1.1.6"]
                  [hiccup "1.0.4"]
