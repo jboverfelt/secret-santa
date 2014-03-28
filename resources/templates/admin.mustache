@@ -7,6 +7,7 @@
     <h4>Assign Children</h4>
     <form action="/admin/assign" method="post" role="form">
       <button class="btn btn-primary">Assign</button>
+      {{{token}}}
     </form>
   </div>
   <hr />
@@ -16,6 +17,7 @@
       <div class="form-group">
         <label for="emails">Emails:</label>
         <input type="text" class="form-control" id="emails" name="emails" placeholder="Separate emails by commas">
+        {{{token}}}
       </div>
       <button class="btn btn-primary">Send Invites</button>
     </form>

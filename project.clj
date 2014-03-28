@@ -4,11 +4,11 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/core.logic "0.8.7"]
                  [compojure "1.1.6"]
-                 [hiccup "1.0.4"]
-                 [lib-noir "0.7.9"]
+                 [ring-anti-forgery "0.3.0"]
+                 [lib-noir "0.8.1"]
                  [clj-time "0.6.0"]
                  [clojurewerkz/mailer "1.0.0"]
-                 [com.novemberain/monger "1.5.0"]
+                 [com.novemberain/monger "1.7.0"]
                  [markdown-clj "0.9.41"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring-server "0.3.0"]]
@@ -22,4 +22,4 @@
    {:ring
     {:open-browser? false, :stacktraces? false, :auto-reload? false}}
    :dev
-   {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.2.0"]]}})
+   {:dependencies [[ring-mock "0.1.5"] [javax.servlet/servlet-api "2.5"]]}})

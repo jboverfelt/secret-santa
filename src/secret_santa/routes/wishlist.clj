@@ -1,5 +1,6 @@
 (ns secret-santa.routes.wishlist
   (:require [compojure.core :refer :all]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [secret-santa.views.layout :as layout]
             [secret-santa.models.wishlist :as wishlist]
             [secret-santa.models.user :as user]
@@ -19,7 +20,7 @@
 
 (defn edit-wishlist []
   (let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]
-    (layout/render "templates/edit-wishlist.mustache" {:my wishlist})))
+    (layout/render "templates/edit-wishlist.mustache" {:my wishlist :token (anti-forgery-field)})))
 
 (defn update-wishlist [text]
   (if-let [wishlist (wishlist/get-wishlist-by-user (session/get :user))]

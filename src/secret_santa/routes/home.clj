@@ -11,7 +11,7 @@
   (let [my-wishlist (wishlist/get-wishlist-by-user (session/get :user))
         my-list (pres/md->html (:text my-wishlist)) 
         child-wishlist (wishlist/get-child-wishlist-by-user (session/get :user))
-        child-text (:text child-wishlist)
+        child-text (pres/md->html (:text child-wishlist))
         child-name (user/find-child-name-by-id (session/get :user))]
     (layout/render "templates/home.mustache" {:my {:text my-list} :child {:text child-text :name child-name}})))
 

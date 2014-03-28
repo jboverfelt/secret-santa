@@ -2,6 +2,7 @@
   (:require [secret-santa.models.user :as user]
             [secret-santa.models.invited-user :as invite]
             [secret-santa.views.layout :as layout]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [compojure.core :refer :all]
             [noir.util.route :refer [restricted]]
             [noir.session :as session]
@@ -9,10 +10,10 @@
             [noir.response :as resp]))
 
 (defn show-registration-page []
-  (layout/render "templates/register.mustache" {}))
+  (layout/render "templates/register.mustache" {:token (anti-forgery-field)}))
 
 (defn show-login-page []
-  (layout/render "templates/login.mustache" {}))
+  (layout/render "templates/login.mustache" {:token (anti-forgery-field)}))
 
 (defn invited? [email]
   (invite/find-invited-user-by-email email))

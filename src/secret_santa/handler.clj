@@ -1,11 +1,10 @@
 (ns secret-santa.handler
   (:require [compojure.core :refer [defroutes routes]]
             [ring.middleware.session.memory :refer [memory-store]]
-            [hiccup.middleware :refer [wrap-base-url]]
+            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [noir.session :as session]
             [noir.util.middleware :as noir]
             [noir.response :as resp]
-            [compojure.handler :as handler]
             [compojure.route :as route]
             [secret-santa.models.user :as user]
             [secret-santa.routes.home :refer [home-routes]]
@@ -39,11 +38,8 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes auth-routes home-routes admin-routes user-routes wishlist-routes app-routes)
-      (handler/site)
-      (noir/wrap-access-rules [{:on-fail force-login :rule user-access}
-                               {:on-fail force-not-found :rule admin-access :uris ["/admin" "/admin/*"]}])
-      (session/wrap-noir-flash)
-      (session/wrap-noir-session {:store (memory-store)})
-      (noir/wrap-strip-trailing-slash)
-      (wrap-base-url)))
+  (-> [auth-routes home-routes admin-routes user-routes wishlist-routes app-routes]
+      (noir/app-handler :access-rules [{:on-fail force-login :rule user-access}
+                                       {:on-fail force-not-found :rule admin-access :uris ["/admin" "/admin/*"]}]
+                        :session-options {:store (memory-store)}
+                        :middleware [wrap-anti-forgery noir/wrap-strip-trailing-slash])))

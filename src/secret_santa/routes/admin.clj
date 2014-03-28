@@ -1,5 +1,6 @@
 (ns secret-santa.routes.admin
   (:require [compojure.core :refer :all]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [secret-santa.views.layout :as layout]
             [secret-santa.models.invited-user :as invite]
             [secret-santa.models.user :as user]
@@ -18,7 +19,7 @@
 (defn show-admin []
   (let [users (user/all-users)
         mappings (map create-santa-child-map users)]
-    (layout/render "templates/admin.mustache" {:mappings mappings})))
+    (layout/render "templates/admin.mustache" {:mappings mappings :token (anti-forgery-field)})))
 
 (defn send-email [to]
   (mail/with-settings {:host "localhost" :port 1025}
