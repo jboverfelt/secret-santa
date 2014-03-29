@@ -1,6 +1,5 @@
 (ns secret-santa.helpers.children
-  (:require [clojure.core.logic :as logic]
-            [clojure.core.logic.fd :as fd]))
+  (:require [clojure.core.logic :as logic]))
 
 ; This implementation adapted from https://github.com/tie-rack/secret-santa
 
