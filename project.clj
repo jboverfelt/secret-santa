@@ -9,14 +9,14 @@
                  [clj-time "0.6.0"]
                  [clojurewerkz/mailer "1.0.0"]
                  [com.novemberain/monger "1.7.0"]
-                 [markdown-clj "0.9.41"]
+                 [autoclave "0.1.6"]
+                 [markdown-clj "0.9.43"]
                  [de.ubercode.clostache/clostache "1.3.1"]
                  [ring-server "0.3.0"]]
   :plugins [[lein-ring "0.8.7"]]
   :ring {:handler secret-santa.handler/app
          :init secret-santa.handler/init
          :destroy secret-santa.handler/destroy}
-  :aot :all
   :profiles
   {:production
    {:ring
