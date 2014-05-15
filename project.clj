@@ -17,6 +17,7 @@
   :ring {:handler secret-santa.handler/app
          :init secret-santa.handler/init
          :destroy secret-santa.handler/destroy}
+  :aot :all
   :profiles
   {:production
    {:ring
